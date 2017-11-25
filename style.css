@@ -9,15 +9,50 @@ body
 
 body
 {
-	background-image: url("assets/anty.png");
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-color: #fff;
 }
 
+nav
+{
+	top: 0;
+}
+
+ul
+{
+	list-style: none;
+}
+
+li
+{
+	display: inline-block;
+	margin: 10px;
+	margin-right: 15px;
+}
+
+ul li a
+{
+	color: #000;
+}
+
+ul li a:hover
+{
+	color: rgb(24, 15, 102)
+}
+
+canvas {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 img
 {
-	verticle-align: middle;
+	vertical-align: middle;
 	border: 0;
 }
 
@@ -45,14 +80,9 @@ a
 	margin-bottom: auto;
 }
 
-.verticle
-{
-	
-}
-
 .circle
 {
-	border-radius: 50%;
+	border-radius: 3%;
 }
 
 .pfp
@@ -68,7 +98,7 @@ a
 .github
 {
 	color: #000;
-	font-size: 9em !important;
+	font-size: 5em !important;
 	justify-content: center !important;
 	display: flex !important;
 }
