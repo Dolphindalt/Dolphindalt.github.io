@@ -1,5 +1,4 @@
 var canvas = document.getElementById("trees");
-if(!canvas) exit(0);
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
