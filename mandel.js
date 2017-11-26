@@ -1,12 +1,19 @@
-function createMandel() {
+var drawing = false;
+
+var zoom = 1.0;
+var xOffset = 0.0, yOffset = 0.0;
+var speed = 0.08;
+
+function createMandel(zoom, yOffset, xOffset) {
+    if(drawing) return;
+    drawing = true;
     var canvas = document.getElementById("mandel");
 
     var context = canvas.getContext("2d");
+    var imageData = context.createImageData(canvas.width, canvas.height);
+    var data = imageData.data;
 
-    var itr = 10000;
-    var zoom = 0.6;
-    var yOffset = 0.01;
-    var xOffset = 0;
+    var itr = 100;
 
     var minRe = -2.0;
     var maxRe = 0.0;
@@ -14,6 +21,8 @@ function createMandel() {
     var maxIm = (minIm+(maxRe-minRe)*canvas.height/canvas.width);
     var ref = (maxRe-minRe)/(canvas.width-1)/zoom;
     var imf = (maxIm-minIm)/(canvas.height-1)/zoom;
+
+    var dptr = 0;
 
     for(var y = 0; y < canvas.height; y++)
     {
@@ -29,8 +38,11 @@ function createMandel() {
                 if(zre2 + zim2 > 4)
                 {
                     isInside = false;
-                    context.fillStyle = 'rgb(' + n + ',' + n*8 + ',100)';
-                    context.fillRect(x, y, 1, 1);
+                    data[dptr] = n;
+                    data[dptr + 1] = n*8;
+                    data[dptr + 2] = 100;
+                    data[dptr + 3] = 255;
+                    dptr += 4;
                     break;
                 }
                 zim = 2*zre*zim+cim;
@@ -38,14 +50,60 @@ function createMandel() {
             }
             if(isInside == true)
             {
-                context.fillStyle = 'black';
-                context.fillRect(x, y, 1, 1);
-                console.log(x + " " + y);
+                data[dptr] = 0;
+                data[dptr + 1] = 0;
+                data[dptr + 2] = 0;
+                data[dptr + 3] = 255;
+                dptr += 4;
             }
         }
     }
+    context.putImageData(imageData, 0, 0);
+    drawing = false;
 }
 
+var button = document.getElementById("redraw");
+button.onclick = function() {
+    createMandel(zoom, xOffset, yOffset);
+}
+
+document.addEventListener("keydown", function(event) {
+    switch(event.code)
+    {
+        case "KeyA":
+        {
+            xOffset -= speed;
+            break;
+        }
+        case "KeyD":
+        {
+            xOffset += speed;
+            break;
+        }
+        case "KeyW":
+        {
+            yOffset += speed;
+            break;
+        }
+        case "KeyS":
+        {
+            yOffset -= speed;
+            break;
+        }
+        case "KeyQ":
+        {
+            zoom += speed;
+            break;
+        }
+        case "KeyE":
+        {
+            zoom -= speed;
+            break;
+        }
+        default: break;
+    }
+});
+
 window.onload = function() {
-    createMandel();
+    createMandel(1.0, 0.0, 0.0);
 }
