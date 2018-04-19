@@ -1,13 +1,15 @@
 var drawing = false;
 
 var zoom = 1.0;
-var xOffset = 0.0, yOffset = 0.0;
 var speed = 0.08;
+var xOffset = -speed * 18, yOffset = 0.0;
 
 function createMandel(zoom, yOffset, xOffset) {
     if(drawing) return;
     drawing = true;
     var canvas = document.getElementById("mandel");
+    canvas.width = 2000;
+    canvas.height = 2000;
 
     var context = canvas.getContext("2d");
     var imageData = context.createImageData(canvas.width, canvas.height);
@@ -72,22 +74,22 @@ document.addEventListener("keydown", function(event) {
     {
         case "KeyA":
         {
-            xOffset -= speed;
+            yOffset -= speed;
             break;
         }
         case "KeyD":
         {
-            xOffset += speed;
+            yOffset += speed;
             break;
         }
         case "KeyW":
         {
-            yOffset += speed;
+            xOffset -= speed;
             break;
         }
         case "KeyS":
         {
-            yOffset -= speed;
+            xOffset += speed;
             break;
         }
         case "KeyQ":
@@ -105,5 +107,5 @@ document.addEventListener("keydown", function(event) {
 });
 
 window.onload = function() {
-    createMandel(1.0, 0.0, 0.0);
+    createMandel(1.0, xOffset, yOffset);
 }
