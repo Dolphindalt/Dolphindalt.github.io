@@ -12,6 +12,10 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+function randomnf(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 function generate(itr, pos, length, contraction, theta, dtheta) {
     if(itr == 0) {
         drawing = false;
@@ -23,8 +27,9 @@ function generate(itr, pos, length, contraction, theta, dtheta) {
     context.lineTo(x, y);
     context.stroke();
     var npos = {x:x, y:y};
-    generate(itr-1, npos, length*contraction, contraction, theta + dtheta, dtheta);
-    generate(itr-1, npos, length*contraction, contraction, theta - dtheta, dtheta);
+    var newLength = length * contraction;
+    generate(itr-1, npos, newLength * randomnf(0.8, 1.3), contraction, theta + dtheta, randomnf(16.0, 40.0) * ang2rad);
+    generate(itr-1, npos, newLength * randomnf(0.8, 1.3), contraction, theta - dtheta, randomnf(16.0, 40.0) * ang2rad);
 }
 
 function createTree(x) {
@@ -34,8 +39,10 @@ function createTree(x) {
     pos = {x:x, y:canvas.height };
     length = random(80, 300);
     contraction = 0.7;
-    theta = random(80, 100) * ang2rad;//90.0 * ang2rad;
-    dtheta = random(16, 20) * ang2rad;//18.0 * ang2rad;
+    theta = randomnf(75.0, 105.0) * ang2rad;//90.0 * ang2rad;
+    dtheta = randomnf(15.0, 25.0) * ang2rad;//18.0 * ang2rad;
+    context.strokeStyle = "#"+((1<<24)*Math.random()|0).toString(16);
+    context.beginPath();
     generate(itr, pos, length, contraction, theta, dtheta);
 }
 
