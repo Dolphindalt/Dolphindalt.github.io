@@ -1,10 +1,10 @@
-var canvas = document.getElementById("trees");
+var canvast = document.getElementById("trees");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvast.width = window.innerWidth;
+canvast.height = window.innerHeight;
 
 var ang2rad = 3.14159265359/180;
-var context = canvas.getContext("2d");
+var context = canvast.getContext("2d");
 
 var drawing = false;
 
@@ -36,7 +36,7 @@ function createTree(x) {
     drawing = true;    
     var itr, pos, length, contraction, theta, dtheta;
     itr = random(7, 12);
-    pos = {x:x, y:canvas.height };
+    pos = {x:x, y:canvast.height };
     length = random(80, 300);
     contraction = 0.7;
     theta = randomnf(75.0, 105.0) * ang2rad;//90.0 * ang2rad;
@@ -45,11 +45,3 @@ function createTree(x) {
     context.beginPath();
     generate(itr, pos, length, contraction, theta, dtheta);
 }
-
-canvas.addEventListener('click', function(event) {
-    if(drawing) return;
-    var x;
-    if(event.pageX) x = event.pageX;
-    else x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-    createTree(x);
-}, false);
